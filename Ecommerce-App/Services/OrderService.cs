@@ -14,10 +14,10 @@ namespace Ecommerce_App.Services
         public void GetAllOrders()
         {
             var orders = _unitOfWork.Orders.GetAll();
-            Console.WriteLine("===== ALL ORDERS =====");
+            Console.WriteLine(Constant.ALL_ORDERS_TITLE);
             if (orders.Count == 0)
             {
-                Console.WriteLine("No orders found.");
+                Console.WriteLine(Constant.NO_ORDERS_FOUND);
                 return;
             }
             foreach (var order in orders)
@@ -32,16 +32,16 @@ namespace Ecommerce_App.Services
 
         public void GetOrderById()
         {
-            Console.Write("Enter Order ID: ");
+            Console.Write(Constant.ENTER_ORDER_ID);
             if (!int.TryParse(Console.ReadLine(), out int id))
             {
-                Console.WriteLine("Invalid Order ID. Please enter a valid number.");
+                Console.WriteLine(Constant.INVALID_ORDER_ID);
                 return;
             }
             var order = _unitOfWork.Orders.GetById(id);
             if (order == null)
             {
-                Console.WriteLine("Order not found.");
+                Console.WriteLine(Constant.ORDER_NOT_FOUND);
                 return;
             }
             Console.WriteLine($"Order ID: {order.OrderId}");
@@ -52,16 +52,16 @@ namespace Ecommerce_App.Services
 
         public void GetOrdersByCustomer()
         {
-            Console.Write("Enter Customer ID: ");
+            Console.Write(Constant.ENTER_CUSTOMER_ID);
             if (!int.TryParse(Console.ReadLine(), out int customerId))
             {
-                Console.WriteLine("Invalid Customer ID. Please enter a valid number.");
+                Console.WriteLine(Constant.INVALID_CUSTOMER_ID);
                 return;
             }
             var orders = _unitOfWork.Orders.GetOrdersByCustomer(customerId);
             if (orders.Count == 0)
             {
-                Console.WriteLine("No orders found for this customer.");
+                Console.WriteLine(Constant.NO_ORDERS_FOR_CUSTOMER);
                 return;
             }
             foreach (var order in orders)
@@ -75,7 +75,7 @@ namespace Ecommerce_App.Services
 
         public void GetOrdersByDateRange()
         {
-            Console.Write("Enter Start Date (yyyy-MM-dd): ");
+            Console.Write(Constant.ENTER_START_DATE);
             if (!DateTime.TryParseExact(
                 Console.ReadLine(),
                 "yyyy-MM-dd",
@@ -83,11 +83,11 @@ namespace Ecommerce_App.Services
                 DateTimeStyles.None,
                 out DateTime startDate))
             {
-                Console.WriteLine("Invalid start date. Please use yyyy-MM-dd format.");
+                Console.WriteLine(Constant.INVALID_START_DATE);
                 return;
             }
 
-            Console.Write("Enter End Date (yyyy-MM-dd): ");
+            Console.Write(Constant.ENTER_END_DATE);
             if (!DateTime.TryParseExact(
                 Console.ReadLine(),
                 "yyyy-MM-dd",
@@ -95,13 +95,13 @@ namespace Ecommerce_App.Services
                 DateTimeStyles.None,
                 out DateTime endDate))
             {
-                Console.WriteLine("Invalid end date. Please use yyyy-MM-dd format.");
+                Console.WriteLine(Constant.INVALID_END_DATE);
                 return;
             }
 
             if (startDate > endDate)
             {
-                Console.WriteLine("Start date cannot be greater than end date.");
+                Console.WriteLine(Constant.START_DATE_GREATER_THAN_END_DATE);
                 return;
             }
 
@@ -111,7 +111,7 @@ namespace Ecommerce_App.Services
 
             if (orders.Count == 0)
             {
-                Console.WriteLine("No orders found in this date range.");
+                Console.WriteLine(Constant.NO_ORDERS_IN_DATE_RANGE);
                 return;
             }
 
@@ -126,10 +126,10 @@ namespace Ecommerce_App.Services
 
         public void GetOrderCount()
         {
-            Console.Write("Enter Customer ID: ");
+            Console.Write(Constant.ENTER_CUSTOMER_ID);
             if (!int.TryParse(Console.ReadLine(), out int customerId))
             {
-                Console.WriteLine("Invalid Customer ID. Please enter a valid number.");
+                Console.WriteLine(Constant.INVALID_CUSTOMER_ID);
                 return;
             }
             int count = _unitOfWork.Orders.GetOrderCountByCustomer(customerId);
@@ -138,23 +138,23 @@ namespace Ecommerce_App.Services
 
         public void GetTotalSales()
         {
-            Console.Write("Enter Start Date (yyyy-MM-dd): ");
+            Console.Write(Constant.ENTER_START_DATE);
             if (!DateTime.TryParseExact(Console.ReadLine(),  "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime startDate))
             {
-                Console.WriteLine("Invalid start date. Please use yyyy-MM-dd format.");
+                Console.WriteLine(Constant.INVALID_START_DATE);
                 return;
             }
 
-            Console.Write("Enter End Date (yyyy-MM-dd): ");
+            Console.Write(Constant.ENTER_END_DATE);
             if (!DateTime.TryParseExact(Console.ReadLine(),  "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime endDate))
             {
-                Console.WriteLine("Invalid end date. Please use yyyy-MM-dd format.");
+                Console.WriteLine(Constant.INVALID_END_DATE);
                 return;
             }
 
             if (startDate > endDate)
             {
-                Console.WriteLine("Start date cannot be greater than end date.");
+                Console.WriteLine(Constant.START_DATE_GREATER_THAN_END_DATE);
                 return;
             }
 
@@ -165,10 +165,10 @@ namespace Ecommerce_App.Services
         public void AddOrder()
         {
             Order order = new Order();
-            Console.Write("Enter Customer ID: ");
+            Console.Write(Constant.ENTER_CUSTOMER_ID);
             if (!int.TryParse(Console.ReadLine(), out int customerId))
             {
-                Console.WriteLine("Invalid Customer ID. Please enter a valid number.");
+                Console.WriteLine(Constant.INVALID_CUSTOMER_ID);
                 return;
             }
             var customer = _unitOfWork.Customers.GetById(customerId);
@@ -178,27 +178,27 @@ namespace Ecommerce_App.Services
                 return;
             }
             order.CustomerId = customerId;
-            Console.Write("Enter Order Date (yyyy-MM-dd): ");
+            Console.Write(Constant.ENTER_ORDER_DATE);
             if (!DateTime.TryParseExact(Console.ReadLine(), "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime orderDate))
             {
-                Console.WriteLine("Invalid order date. Please use yyyy-MM-dd format.");
+                Console.WriteLine(Constant.INVALID_ORDER_DATE);
                 return;
             }
 
             order.OrderDate = orderDate;
-            Console.Write("Enter Total Amount: ");
+            Console.Write(Constant.ENTER_TOTAL_AMOUNT);
 
             if (!decimal.TryParse(
                 Console.ReadLine(),
                 out decimal totalAmount))
             {
-                Console.WriteLine("Invalid amount. Please enter a valid number.");
+                Console.WriteLine(Constant.INVALID_AMOUNT);
                 return;
             }
 
             if (totalAmount < 0)
             {
-                Console.WriteLine("Total amount cannot be negative.");
+                Console.WriteLine(Constant.TOTAL_AMOUNT_CANNOT_BE_NEGATIVE);
                 return;
             }
 
@@ -207,16 +207,16 @@ namespace Ecommerce_App.Services
             _unitOfWork.Orders.Add(order);
             _unitOfWork.Save();
 
-            Console.WriteLine("Order added successfully.");
+            Console.WriteLine(Constant.ORDER_ADDED_SUCCESSFULLY);
         }
 
         public void UpdateOrder()
         {
-            Console.Write("Enter Order ID: ");
+            Console.Write(Constant.ENTER_ORDER_ID);
 
             if (!int.TryParse(Console.ReadLine(), out int id))
             {
-                Console.WriteLine("Invalid Order ID. Please enter a valid number.");
+                Console.WriteLine(Constant.INVALID_ORDER_ID);
                 return;
             }
 
@@ -224,56 +224,57 @@ namespace Ecommerce_App.Services
 
             if (order == null)
             {
-                Console.WriteLine("Order not found.");
+                Console.WriteLine(Constant.ORDER_NOT_FOUND);
                 return;
             }
 
-            Console.Write("Enter new Order Date (yyyy-MM-dd): ");
+            Console.Write(Constant.ENTER_NEW_ORDER_DATE);
 
             if (!DateTime.TryParseExact(Console.ReadLine(), "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime orderDate))
             {
-                Console.WriteLine("Invalid order date. Please use yyyy-MM-dd format.");
+                Console.WriteLine(Constant.INVALID_ORDER_DATE);
                 return;
             }
 
-            Console.Write("Enter new Total Amount: ");
+            Console.Write(Constant.ENTER_NEW_TOTAL_AMOUNT);
             if (!decimal.TryParse(
                 Console.ReadLine(),
                 out decimal totalAmount))
             {
-                Console.WriteLine("Invalid amount. Please enter a valid number.");
+                Console.WriteLine(Constant.INVALID_AMOUNT);
                 return;
             }
 
             if (totalAmount < 0)
             {
-                Console.WriteLine("Total amount cannot be negative.");
+                Console.WriteLine(Constant.TOTAL_AMOUNT_CANNOT_BE_NEGATIVE);
                 return;
             }
             order.OrderDate = orderDate;
             order.TotalAmount = totalAmount;
             _unitOfWork.Orders.Update(order);
             _unitOfWork.Save();
-            Console.WriteLine("Order updated successfully.");
+            Console.WriteLine(Constant.ORDER_UPDATED_SUCCESSFULLY);
         }
 
         public void DeleteOrder()
         {
-            Console.Write("Enter Order ID: ");
+            Console.Write(Constant.ENTER_ORDER_ID);
+
             if (!int.TryParse(Console.ReadLine(), out int id))
             {
-                Console.WriteLine("Invalid Order ID. Please enter a valid number.");
+                Console.WriteLine(Constant.INVALID_ORDER_ID);
                 return;
             }
             var order = _unitOfWork.Orders.GetById(id);
             if (order == null)
             {
-                Console.WriteLine("Order not found.");
+                Console.WriteLine(Constant.ORDER_NOT_FOUND);
                 return;
             }
             _unitOfWork.Orders.Delete(id);
             _unitOfWork.Save();
-            Console.WriteLine("Order deleted successfully.");
+            Console.WriteLine(Constant.ORDER_DELETED_SUCCESSFULLY);
         }
     }
 }

@@ -14,10 +14,10 @@ namespace Ecommerce_App.Services
         public void GetAllCustomers()
         {
             var customers = _unitOfWork.Customers.GetAll();
-            Console.WriteLine("===== ALL CUSTOMERS =====");
+            Console.WriteLine(Constant.ALL_CUSTOMERS_TITLE);
             if (customers.Count == 0)
             {
-                Console.WriteLine("No customers found.");
+                Console.WriteLine(Constant.NO_CUSTOMERS_FOUND);
                 return;
             }
             foreach (var customer in customers)
@@ -32,16 +32,16 @@ namespace Ecommerce_App.Services
 
         public void GetCustomerById()
         {
-            Console.Write("Enter Customer ID: ");
+            Console.Write(Constant.ENTER_CUSTOMER_ID);
             if (!int.TryParse(Console.ReadLine(), out int id))
             {
-                Console.WriteLine("Invalid Customer ID. Please enter a valid number.");
+                Console.WriteLine(Constant.INVALID_CUSTOMER_ID);
                 return;
             }
             var customer = _unitOfWork.Customers.GetById(id);
             if (customer == null)
             {
-                Console.WriteLine("Customer not found.");
+                Console.WriteLine(Constant.CUSTOMER_NOT_FOUND);
                 return;
             }
 
@@ -53,17 +53,17 @@ namespace Ecommerce_App.Services
 
         public void GetCustomersByCity()
         {
-            Console.Write("Enter City: ");
+            Console.Write(Constant.ENTER_CITY);
             string city = Console.ReadLine();
             if (string.IsNullOrWhiteSpace(city))
             {
-                Console.WriteLine("City cannot be empty.");
+                Console.WriteLine(Constant.CITY_CANNOT_BE_EMPTY);
                 return;
             }
             var customers = _unitOfWork.Customers.GetByCity(city);
             if (customers.Count == 0)
             {
-                Console.WriteLine("No customers found.");
+                Console.WriteLine(Constant.NO_CUSTOMERS_FOUND);
                 return;
             }
 
@@ -80,67 +80,67 @@ namespace Ecommerce_App.Services
         public void AddCustomer()
         {
             Customer customer = new Customer();
-            Console.Write("Enter Name: ");
+            Console.Write(Constant.ENTER_NAME);
             customer.Name = Console.ReadLine();
             if (string.IsNullOrWhiteSpace(customer.Name))
             {
-                Console.WriteLine("Name cannot be empty.");
+                Console.WriteLine(Constant.NAME_CANNOT_BE_EMPTY);
                 return;
             }
-            Console.Write("Enter Email: ");
+            Console.Write(Constant.ENTER_EMAIL);
             string email = Console.ReadLine();
             if (!IsValidEmail(email))
             {
-                Console.WriteLine("Invalid email format.");
+                Console.WriteLine(Constant.INVALID_EMAIL);
                 return;
             }
             customer.Email = email;
-            Console.Write("Enter City: ");
+            Console.Write(Constant.ENTER_CITY);
             customer.City = Console.ReadLine();
             if (string.IsNullOrWhiteSpace(customer.City))
             {
-                Console.WriteLine("City cannot be empty.");
+                Console.WriteLine(Constant.CITY_CANNOT_BE_EMPTY);
                 return;
             }
             _unitOfWork.Customers.Add(customer);
             _unitOfWork.Save();
-            Console.WriteLine("Customer added successfully.");
+            Console.WriteLine(Constant.CUSTOMER_ADDED_SUCCESSFULLY);
         }
 
         public void UpdateCustomer()
         {
-            Console.Write("Enter Customer ID: ");
+            Console.Write(Constant.ENTER_CUSTOMER_ID);
             if (!int.TryParse(Console.ReadLine(), out int id))
             {
-                Console.WriteLine("Invalid Customer ID. Please enter a valid number.");
+                Console.WriteLine(Constant.INVALID_CUSTOMER_ID);
                 return;
             }
             var customer = _unitOfWork.Customers.GetById(id);
             if (customer == null)
             {
-                Console.WriteLine("Customer not found.");
+                Console.WriteLine(Constant.CUSTOMER_NOT_FOUND);
                 return;
             }
-            Console.Write("Enter new Name: ");
+            Console.Write(Constant.ENTER_NEW_NAME);
             string name = Console.ReadLine();
             if (string.IsNullOrWhiteSpace(name))
             {
-                Console.WriteLine("Name cannot be empty.");
+                Console.WriteLine(Constant.NAME_CANNOT_BE_EMPTY);
                 return;
             }
-            Console.Write("Enter new Email: ");
+            Console.Write(Constant.ENTER_NEW_EMAIL);
             string email = Console.ReadLine();
             if (!IsValidEmail(email))
             {
-                Console.WriteLine("Invalid email format.");
+                Console.WriteLine(Constant.INVALID_EMAIL);
                 return;
             }
 
-            Console.Write("Enter new City: ");
+            Console.Write(Constant.ENTER_NEW_CITY);
             string city = Console.ReadLine();
             if (string.IsNullOrWhiteSpace(city))
             {
-                Console.WriteLine("City cannot be empty.");
+                Console.WriteLine(Constant.CITY_CANNOT_BE_EMPTY);
                 return;
             }
 
@@ -149,26 +149,26 @@ namespace Ecommerce_App.Services
             customer.City = city;
             _unitOfWork.Customers.Update(customer);
             _unitOfWork.Save();
-            Console.WriteLine("Customer updated successfully.");
+            Console.WriteLine(Constant.CUSTOMER_UPDATED_SUCCESSFULLY);
         }
         public void DeleteCustomer()
         {
-            Console.Write("Enter Customer ID: ");
+            Console.Write(Constant.ENTER_CUSTOMER_ID);
             if (!int.TryParse(Console.ReadLine(), out int id))
             {
-                Console.WriteLine("Invalid Customer ID. Please enter a valid number.");
+                Console.WriteLine(Constant.INVALID_CUSTOMER_ID);
                 return;
             }
 
             var customer = _unitOfWork.Customers.GetById(id);
             if (customer == null)
             {
-                Console.WriteLine("Customer not found.");
+                Console.WriteLine(Constant.CUSTOMER_NOT_FOUND);
                 return;
             }
             _unitOfWork.Customers.Delete(id);
             _unitOfWork.Save();
-            Console.WriteLine("Customer deleted successfully.");
+            Console.WriteLine(Constant.CUSTOMER_DELETED_SUCCESSFULLY);
         }
         private bool IsValidEmail(string email)
         {

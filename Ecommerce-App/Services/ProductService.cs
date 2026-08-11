@@ -14,10 +14,10 @@ namespace Ecommerce_App.Services
         public void GetAllProducts()
         {
             var products = _unitOfWork.Products.GetAll();
-            Console.WriteLine("===== ALL PRODUCTS =====");
+            Console.WriteLine(Constant.ALL_PRODUCTS_TITLE);
             if (products.Count == 0)
             {
-                Console.WriteLine("No products found.");
+                Console.WriteLine(Constant.NO_PRODUCTS_FOUND);
                 return;
             }
 
@@ -32,17 +32,17 @@ namespace Ecommerce_App.Services
         }
         public void GetProductById()
         {
-            Console.Write("Enter Product ID: ");
+            Console.Write(Constant.ENTER_PRODUCT_ID);
             if (!int.TryParse(Console.ReadLine(), out int id))
             {
-                Console.WriteLine("Invalid Product ID. Please enter a valid number.");
+                Console.WriteLine(Constant.INVALID_PRODUCT_ID);
                 return;
             }
 
             var product = _unitOfWork.Products.GetById(id);
             if (product == null)
             {
-                Console.WriteLine("Product not found.");
+                Console.WriteLine(Constant.PRODUCT_NOT_FOUND);
                 return;
             }
             Console.WriteLine($"ID: {product.ProductId}");
@@ -53,21 +53,21 @@ namespace Ecommerce_App.Services
 
         public void GetProductsByCategory()
         {
-            Console.Write("Enter Category ID: ");
+            Console.Write(Constant.ENTER_CATEGORY_ID);
             if (!int.TryParse(Console.ReadLine(), out int categoryId))
             {
-                Console.WriteLine("Invalid Category ID. Please enter a valid number.");
+                Console.WriteLine(Constant.INVALID_CATEGORY_ID);
                 return;
             }
             if (categoryId <= 0)
             {
-                Console.WriteLine("Category ID must be greater than 0.");
+                Console.WriteLine(Constant.CATEGORY_ID_GREATER_THAN_ZERO);
                 return;
             }
             var products = _unitOfWork.Products.GetByCategory(categoryId);
             if (products.Count == 0)
             {
-                Console.WriteLine("No products found.");
+                Console.WriteLine(Constant.PRODUCT_NOT_FOUND);
                 return;
             }
 
@@ -82,45 +82,43 @@ namespace Ecommerce_App.Services
 
         public void GetProductsByPrice()
         {
-            Console.Write("Enter Minimum Price: ");
+            Console.Write(Constant.ENTER_MINIMUM_PRICE);
 
             if (!decimal.TryParse(
                 Console.ReadLine(),
                 out decimal minPrice))
             {
-                Console.WriteLine("Invalid minimum price. Please enter a valid number.");
+                Console.WriteLine(Constant.INVALID_MINIMUM_PRICE);
                 return;
             }
 
-            Console.Write("Enter Maximum Price: ");
+            Console.Write(Constant.ENTER_MAXIMUM_PRICE);
 
             if (!decimal.TryParse(
                 Console.ReadLine(),
                 out decimal maxPrice))
             {
-                Console.WriteLine("Invalid maximum price. Please enter a valid number.");
+                Console.WriteLine(Constant.INVALID_MAXIMUM_PRICE);
                 return;
             }
 
             if (minPrice < 0 || maxPrice < 0)
             {
-                Console.WriteLine("Price cannot be negative.");
+                Console.WriteLine(Constant.PRICE_CANNOT_BE_NEGATIVE);
                 return;
             }
 
             if (minPrice > maxPrice)
             {
-                Console.WriteLine("Minimum price cannot be greater than maximum price.");
+                Console.WriteLine(Constant.MINIMUM_PRICE_GREATER_THAN_MAXIMUM);
                 return;
             }
 
-            var products = _unitOfWork.Products.GetProductsByPrice(
-                minPrice,
-                maxPrice);
+            var products = _unitOfWork.Products.GetProductsByPrice(minPrice, maxPrice);
 
             if (products.Count == 0)
             {
-                Console.WriteLine("No products found in this price range.");
+                Console.WriteLine(Constant.NO_PRODUCTS_IN_PRICE_RANGE);
                 return;
             }
 
@@ -136,10 +134,10 @@ namespace Ecommerce_App.Services
         public void GetMostPopularProducts()
         {
             var products = _unitOfWork.Products.GetMostPopularProducts();
-            Console.WriteLine("===== MOST POPULAR PRODUCTS =====");
+            Console.WriteLine(Constant.MOST_POPULAR_PRODUCTS_TITLE);
             if (products.Count == 0)
             {
-                Console.WriteLine("No popular products found.");
+                Console.WriteLine(Constant.NO_POPULAR_PRODUCTS_FOUND);
                 return;
             }
             foreach (var product in products)
@@ -154,118 +152,118 @@ namespace Ecommerce_App.Services
         public void AddProduct()
         {
             Product product = new Product();
-            Console.Write("Enter Product Name: ");
+            Console.Write(Constant.ENTER_PRODUCT_NAME);
             string name = Console.ReadLine();
             if (string.IsNullOrWhiteSpace(name))
             {
-                Console.WriteLine("Product name cannot be empty.");
+                Console.WriteLine(Constant.PRODUCT_NAME_CANNOT_BE_EMPTY);
                 return;
             }
             product.Name = name;
-            Console.Write("Enter Price: ");
+            Console.Write(Constant.ENTER_PRICE);
             if (!decimal.TryParse(Console.ReadLine(), out decimal price))
             {
-                Console.WriteLine("Invalid price. Please enter a valid number.");
+                Console.WriteLine(Constant.INVALID_PRICE);
                 return;
             }
 
             if (price < 0)
             {
-                Console.WriteLine("Price cannot be negative.");
+                Console.WriteLine(Constant.PRICE_CANNOT_BE_NEGATIVE);
                 return;
             }
             product.Price = price;
-            Console.Write("Enter Category ID: ");
+            Console.Write(Constant.ENTER_CATEGORY_ID);
             if (!int.TryParse(Console.ReadLine(), out int categoryId))
             {
-                Console.WriteLine("Invalid Category ID. Please enter a valid number.");
+                Console.WriteLine(Constant.INVALID_CATEGORY_ID);
                 return;
             }
             if (categoryId <= 0)
             {
-                Console.WriteLine("Category ID must be greater than 0.");
+                Console.WriteLine(Constant.CATEGORY_ID_GREATER_THAN_ZERO);
                 return;
             }
             product.ProductCategoryId = categoryId;
-            Console.Write("Enter Stock: ");
+            Console.Write(Constant.ENTER_STOCK);
             if (!int.TryParse(Console.ReadLine(), out int stock))
             {
-                Console.WriteLine("Invalid stock. Please enter a valid number.");
+                Console.WriteLine(Constant.INVALID_STOCK);
                 return;
             }
             if (stock < 0)
             {
-                Console.WriteLine("Stock cannot be negative.");
+                Console.WriteLine(Constant.STOCK_CANNOT_BE_NEGATIVE);
                 return;
             }
             product.stock = stock;
             _unitOfWork.Products.Add(product);
             _unitOfWork.Save();
-            Console.WriteLine("Product added successfully.");
+            Console.WriteLine(Constant.PRODUCT_ADDED_SUCCESSFULLY);
         }
 
         public void UpdateProduct()
         {
-            Console.Write("Enter Product ID: ");
+            Console.Write(Constant.ENTER_PRODUCT_ID);
             if (!int.TryParse(Console.ReadLine(), out int id))
             {
-                Console.WriteLine("Invalid Product ID. Please enter a valid number.");
+                Console.WriteLine(Constant.INVALID_PRODUCT_ID);
                 return;
             }
             var product = _unitOfWork.Products.GetById(id);
             if (product == null)
             {
-                Console.WriteLine("Product not found.");
+                Console.WriteLine(Constant.PRODUCT_NOT_FOUND);
                 return;
             }
 
-            Console.Write("Enter new Product Name: ");
+            Console.Write(Constant.ENTER_NEW_PRODUCT_NAME);
             string name = Console.ReadLine();
             if (string.IsNullOrWhiteSpace(name))
             {
-                Console.WriteLine("Product name cannot be empty.");
+                Console.WriteLine(Constant.PRODUCT_NAME_CANNOT_BE_EMPTY);
                 return;
             }
-            Console.Write("Enter new Price: ");
+            Console.Write(Constant.ENTER_NEW_PRICE);
             if (!decimal.TryParse(
                 Console.ReadLine(),
                 out decimal price))
             {
-                Console.WriteLine("Invalid price. Please enter a valid number.");
+                Console.WriteLine(Constant.INVALID_PRICE);
                 return;
             }
             if (price < 0)
             {
-                Console.WriteLine("Price cannot be negative.");
+                Console.WriteLine(Constant.PRICE_CANNOT_BE_NEGATIVE);
                 return;
             }
-            Console.Write("Enter new Category ID: ");
+            Console.Write(Constant.ENTER_NEW_CATEGORY_ID);
 
             if (!int.TryParse(
                 Console.ReadLine(),
                 out int categoryId))
             {
-                Console.WriteLine("Invalid Category ID. Please enter a valid number.");
+                Console.WriteLine(Constant.INVALID_CATEGORY_ID);
                 return;
             }
             if (categoryId <= 0)
             {
-                Console.WriteLine("Category ID must be greater than 0.");
+                Console.WriteLine(Constant.CATEGORY_ID_GREATER_THAN_ZERO);
                 return;
             }
 
-            Console.Write("Enter new Stock: ");
+            Console.Write(Constant.ENTER_NEW_STOCK);
             if (!int.TryParse(
                 Console.ReadLine(),
                 out int stock))
             {
-                Console.WriteLine("Invalid stock. Please enter a valid number.");
+                Console.WriteLine(Constant.INVALID_STOCK);
                 return;
             }
 
             if (stock < 0)
             {
-                Console.WriteLine("Stock cannot be negative.");
+                Console.WriteLine(Constant.STOCK_CANNOT_BE_NEGATIVE);
                 return;
             }
 
@@ -276,26 +274,26 @@ namespace Ecommerce_App.Services
 
             _unitOfWork.Products.Update(product);
             _unitOfWork.Save();
-            Console.WriteLine("Product updated successfully.");
+            Console.WriteLine(Constant.PRODUCT_UPDATED_SUCCESSFULLY);
         }
 
         public void DeleteProduct()
         {
-            Console.Write("Enter Product ID: ");
+            Console.Write(Constant.ENTER_PRODUCT_ID);
             if (!int.TryParse(Console.ReadLine(), out int id))
             {
-                Console.WriteLine("Invalid Product ID. Please enter a valid number.");
+                Console.WriteLine(Constant.INVALID_PRODUCT_ID);
                 return;
             }
             var product = _unitOfWork.Products.GetById(id);
             if (product == null)
             {
-                Console.WriteLine("Product not found.");
+                Console.WriteLine(Constant.PRODUCT_NOT_FOUND);
                 return;
             }
             _unitOfWork.Products.Delete(id);
             _unitOfWork.Save();
-            Console.WriteLine("Product deleted successfully.");
+            Console.WriteLine(Constant.PRODUCT_DELETED_SUCCESSFULLY);
         }
     }
 }
